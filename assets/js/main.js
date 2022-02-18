@@ -86,6 +86,11 @@
         selectHeader.classList.remove("fixed-top");
         nextElement.classList.remove("scrolled-offset");
       }
+      if (headerOffset - window.scrollY <= -10) {
+        selectHeader.classList.add("back-blur");
+      } else {
+        selectHeader.classList.remove("back-blur");
+      }
     };
     window.addEventListener("load", headerFixed);
     onscroll(document, headerFixed);

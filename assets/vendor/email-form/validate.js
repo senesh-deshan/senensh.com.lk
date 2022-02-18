@@ -1,7 +1,7 @@
 (function () {
   "use strict";
 
-  let forms = document.querySelectorAll(".php-email-form");
+  let forms = document.querySelectorAll(".email-form");
 
   forms.forEach(function (e) {
     e.addEventListener("submit", function (event) {
@@ -52,11 +52,13 @@
     fetch(action, {
       method: "POST",
       body: formData,
-      headers: { "X-Requested-With": "XMLHttpRequest" },
+      headers: {
+        Accept: "application/json",
+      },
     })
       .then((response) => {
         if (response.ok) {
-          return response.text();
+          return response.json();
         } else {
           throw new Error(
             `${response.status} ${response.statusText} ${response.url}`
@@ -65,7 +67,7 @@
       })
       .then((data) => {
         thisForm.querySelector(".loading").classList.remove("d-block");
-        if (data.trim() == "OK") {
+        if (data.ok) {
           thisForm.querySelector(".sent-message").classList.add("d-block");
           thisForm.reset();
         } else {
